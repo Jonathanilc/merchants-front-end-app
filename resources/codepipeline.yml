@@ -23,7 +23,7 @@ Resources:
               Configuration:
                 Owner: "{{resolve:secretsmanager:merchants_secret:SecretString:SourceRepoOwner}}"
                 Repo: "{{resolve:secretsmanager:merchants_secret:SecretString:SourceRepoName}}"
-                Branch: main
+                Branch: master
                 OAuthToken: "{{resolve:secretsmanager:merchants_secret:SecretString:GitHubPersonalAccessToken}}"
         -
           Name: Build
