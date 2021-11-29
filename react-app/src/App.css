@@ -22,6 +22,23 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
+
+  
+}
+
+.App-header form {
+    display: flex;
+    flex-direction: column;
+    min-width: 1000px;
+    gap: 20px;
+}
+
+.App-header form label{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .App-link {
@@ -35,4 +52,81 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+svg{
+  cursor: pointer;
+}
+
+#icon
+{
+	transform: scale(0.5);
+}
+
+#lines {
+	transform-origin: 53% 46%;
+	animation: turn 1.5s forwards infinite linear;
+}
+
+@keyframes turn
+{
+	from{
+		
+		transform: scale(1);
+		opacity: 1;
+	}
+	to{
+		transform: scale(1.5);
+		opacity: 0;
+	}
+}
+
+.ster-geel {
+	transform-origin: 53% 46%;
+	animation: stars 4s forwards infinite linear;
+	animation-delay: 500ms;
+}
+
+.ster-wit {
+	transform-origin: 53% 46%;
+	animation: stars 4s forwards infinite linear;
+	animation-delay: 500ms;
+}
+
+@keyframes stars
+{
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}
+
+#toverstok{
+transform-origin: 15% 70%;
+	animation: move 2s alternate infinite;
+}
+
+@keyframes move{
+	from{
+		transform: rotate(-5deg);
+	}
+	to{
+		transform: rotate(5deg);
+	}
+}
+
+#circle
+{
+	transform-origin: 50% 50%;
+	animation: bigger 2s alternate infinite;
+}
+@keyframes bigger{
+	from{
+		transform: scale(1);
+	}
+	to{
+		transform: scale(1.02);
+	}
 }
