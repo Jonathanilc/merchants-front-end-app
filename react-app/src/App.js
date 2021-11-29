@@ -13,25 +13,23 @@ function App() {
   const [result, setResult] = useState("");
   const [totalCost, setTotalCost] = useState("");
   const [err, setErr] = useState("");
-  const [showUpload, setShowUpload] = useState(true);
+  const [showUpload, setShowUpload] = useState(false);
+  const [getKey, setGetKey] = useState("");
+  const [uploadKey, setUploadKey] = useState("");
 
   const fileTypes = ["CSV"];
   const handleChange = (file) => {
     const config = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "x-api-key": process.env.UPLOAD_API_KEY
+        "x-api-key": uploadKey,
       },
     };
     const data = new FormData();
-    data.append('file', file);
+    data.append("file", file);
     try {
       axios
-        .post(
-          process.env.UPLOAD_API_ENDPOINT,
-          data,
-          config
-        )
+        .post(`${process.env.REACT_APP_UPLOAD_API_ENDPOINT}`, data, config)
         .then(function (response) {
           setResult(response);
           if (response && response.data) {
@@ -40,7 +38,9 @@ function App() {
           }
         })
         .catch(function (error) {
-          setErr(error.response.data.error);
+          if(error.response) {
+            setErr(error.response.data.error);
+          }
         });
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ function App() {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.GETCOST_API_KEY,
+        "x-api-key": getKey,
         "Access-Control-Allow-Origin": "*",
       },
     };
@@ -62,11 +62,7 @@ function App() {
     };
     try {
       axios
-        .post(
-          process.env.GETCOST_API_ENDPOINT,
-          data,
-          config
-        )
+        .post(`${process.env.REACT_APP_GETCOST_API_ENDPOINT}`, data, config)
         .then(function (response) {
           setResult(response);
           if (response && response.data) {
@@ -75,7 +71,9 @@ function App() {
           }
         })
         .catch(function (error) {
-          setErr(error.response.data.error);
+          if(error.response) {
+            setErr(error.response.data.error);
+          }
         });
     } catch (error) {
       console.log(error);
@@ -111,6 +109,26 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <form>
+          <label>
+            GET COST API KEY:
+            <input
+              value={getKey}
+              onChange={(e) => setGetKey(e.target.value)}
+              type="text"
+              name="getKey"
+            />
+          </label>
+          <label>
+            UPLOAD API KEY:
+            <input
+              value={uploadKey}
+              onChange={(e) => setUploadKey(e.target.value)}
+              type="text"
+              name="uploadKey"
+            />
+          </label>
+        </form>
         <div>Merchants Cost Estimator</div>
         <form>
           <label>
@@ -145,7 +163,7 @@ function App() {
           {err && <div>{err}</div>}
         </form>
         <div onClick={() => setShowUpload(!showUpload)}>
-          <Icon/>
+          <Icon />
         </div>
         {renderDropZone()}
       </header>
